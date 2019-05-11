@@ -1,12 +1,14 @@
 package learning;
 
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import java.util.ArrayList;
+import java.io.IOException;
 
 public class MainPage extends Parent
 {
@@ -17,14 +19,33 @@ public class MainPage extends Parent
     @FXML
     public Label todos;
 
-    private ArrayList<String> _todoModel = new ArrayList<>();
+    private MainPageModel _model;
 
-    public void addTodo()
+    public static Parent build() throws IOException
     {
-        _todoModel.add(newTodo.getText());
+        FXMLLoader loader = new FXMLLoader(MainPage.class.getResource("main-page.fxml"));
+        MainPage mainPage = new MainPage(new MainPageModel());
+        loader.setController(mainPage);
+        return loader.load();
+    }
 
-        todos.setText(String.join("\n", _todoModel));
+    public MainPage(MainPageModel model)
+    {
+        _model = model;
+    }
 
-        newTodo.setText("");
+    @FXML
+    public void initialize()
+    {
+        addButton.setOnAction(event -> addTodo());
+        newTodo.setOnAction(event -> addTodo());
+
+        _model.todos.addListener((ListChangeListener<String>) c -> todos.setText(String.join("\n", c.getList())));
+        _model.todos.addListener((ListChangeListener<String>) c -> newTodo.setText(""));
+    }
+
+    private void addTodo()
+    {
+        _model.todos.add(newTodo.getText());
     }
 }

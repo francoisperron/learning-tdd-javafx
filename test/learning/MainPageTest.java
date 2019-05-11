@@ -1,18 +1,23 @@
 package learning;
 
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import org.junit.Test;
+
+import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MainPageTest extends JavaFxTest
 {
-    @Override
-    protected String loadComponent()
+    public void start(Stage stage) throws IOException
     {
-        return "main-page.fxml";
+        Scene scene = new Scene(MainPage.build());
+        stage.setScene(scene);
+        stage.show();
     }
 
     @Test

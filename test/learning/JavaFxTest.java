@@ -1,13 +1,8 @@
 package learning;
 
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import org.junit.BeforeClass;
 import org.testfx.framework.junit.ApplicationTest;
-
-import java.io.IOException;
 
 public abstract class JavaFxTest extends ApplicationTest
 {
@@ -23,14 +18,14 @@ public abstract class JavaFxTest extends ApplicationTest
         System.setProperty("java.awt.headless", "true");
     }
 
-    public void start(Stage stage) throws IOException
-    {
-        Scene scene = new Scene(FXMLLoader.load(JavaFxTest.class.getResource(loadComponent())));
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    protected abstract String loadComponent();
+//    public void start(Stage stage) throws IOException
+//    {
+//        Scene scene = new Scene(FXMLLoader.load(JavaFxTest.class.getResource(loadComponent())));
+//        stage.setScene(scene);
+//        stage.show();
+//    }
+//
+//    protected abstract String loadComponent();
 
 
     protected <T extends Node> T find(String query)

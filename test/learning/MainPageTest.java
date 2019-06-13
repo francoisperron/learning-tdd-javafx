@@ -10,10 +10,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MainPageTest extends JavaFxTest
 {
+    private MainPage _mainPage;
+
     @Override
     protected Region loadComponent()
     {
-        return new MainPage(new MainPageModel());
+        _mainPage = new MainPage(new State());
+        return _mainPage;
     }
 
     @Test
@@ -22,6 +25,9 @@ public class MainPageTest extends JavaFxTest
         clickOn("#newTodo");
         write("learn");
         clickOn("#addButton");
+
+        Label node = (Label) _mainPage.lookup("#todos");
+        System.out.println("node = " + node.getText());
 
         Label todos = find("#todos");
         assertThat(todos.getText(), is("learn"));

@@ -6,22 +6,13 @@ import learning.new_todo.NewTodoView;
 
 public class MainPage extends VBox
 {
-    private State _model;
-
-    public MainPage(State state)
+    public MainPage(Store store)
     {
-        _model = state;
-
+        setId("mainPage");
         setPrefHeight(600);
         setPrefWidth(640);
 
-        getChildren().add(new NewTodoView(this::addTodo));
-        getChildren().add(new ListTodosView(_model.todos));
-    }
-
-
-    private void addTodo(String todo)
-    {
-        _model.todos.add(todo);
+        getChildren().add(new NewTodoView(store));
+        getChildren().add(new ListTodosView(store));
     }
 }

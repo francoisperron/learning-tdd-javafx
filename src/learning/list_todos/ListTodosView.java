@@ -1,16 +1,18 @@
 package learning.list_todos;
 
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import learning.Store;
 
 public class ListTodosView extends HBox
 {
     public Label label;
 
-    public ListTodosView(ObservableList<String> todos)
+    public ListTodosView(Store store)
     {
+        setId("listTodoView");
         setPrefWidth(100);
 
         this.label = new Label();
@@ -18,6 +20,6 @@ public class ListTodosView extends HBox
 
         getChildren().add(this.label);
 
-        todos.addListener((ListChangeListener<String>) c -> label.setText(String.join("\n", c.getList())));
+        store.getTodos().addListener((ListChangeListener<String>) c -> Platform.runLater(() -> label.setText(String.join("\n", c.getList()))));
     }
 }

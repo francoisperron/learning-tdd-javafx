@@ -2,42 +2,49 @@ package learning.new_todo;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-
-import java.util.function.Consumer;
+import learning.Store;
 
 public class NewTodoView extends HBox
 {
     private TextField _textField;
-    private Button _button;
-    private Consumer<String> _onAdd;
+    private Store _store;
 
-    public NewTodoView(Consumer<String> onAdd)
+    public NewTodoView(Store store)
     {
-        _onAdd = onAdd;
+        _store = store;
 
-        setPrefHeight(50);
+        setId("newTodoView");
         setPrefWidth(100);
 
+        addTextField();
+        addButton();
+    }
+
+    private void addTextField()
+    {
         _textField = new TextField();
         _textField.setId("newTodo");
         getChildren().add(_textField);
 
-        _button = new Button();
-        _button.setId("addButton");
-        _button.contentDisplayProperty().setValue(ContentDisplay.CENTER);
-        _button.setText("Add");
-        getChildren().add(_button);
-
-        _button.setOnAction(this::addTodo);
-        _textField.setOnAction(this::addTodo);
+        _textField.setOnAction(this::onNewTodo);
     }
 
-    private void addTodo(ActionEvent actionEvent)
+    private void addButton()
     {
-        _onAdd.accept(_textField.getText());
+        Button button = new Button();
+        button.setId("addButton");
+        button.setText("Add");
+        getChildren().add(button);
+
+        button.setOnAction(this::onNewTodo);
+    }
+
+    @SuppressWarnings("unused")
+    private void onNewTodo(ActionEvent actionEvent)
+    {
+        _store.dispatch(new NewTodoEvent(_textField.getText()));
         _textField.clear();
     }
 }

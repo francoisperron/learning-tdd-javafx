@@ -9,10 +9,10 @@ public class Main extends Application
     @Override
     public void start(Stage stage)
     {
-        State state = new State();
+        Store store = new Store();
 
         stage.setTitle("Things todo");
-        stage.setScene(new Scene(new MainPage(state)));
+        stage.setScene(new Scene(new MainPage(store)));
         stage.show();
     }
 }
